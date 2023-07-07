@@ -21,8 +21,7 @@ int DeviceDriver::read(long address)
 
 void DeviceDriver::write(long address, int data)
 {
-    int value = (int)(m_hardware->read(address));
-    if (value == 0xFF)
+	if (EMPTY_VALUE == (int)(m_hardware->read(address)))
     {
         m_hardware->write(address, (unsigned char)data);
         return;
