@@ -19,7 +19,7 @@ int DeviceDriver::read(long address)
     for (int i = 0; i < 4; i++)
     {
         if (readData[i] == result) continue;
-        ReadFailException();
+        throw ReadFailException();
     }
     return result;
 }
