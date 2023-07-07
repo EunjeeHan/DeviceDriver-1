@@ -19,3 +19,14 @@ TEST(DeviceDriverReadTest, callFiveTimesTest) {
 	DeviceDriver deviceDriver(&flashMock);
 	deviceDriver.read(0x5);
 }
+
+TEST(DeviceDriverReadTest, readPassTest) {
+	FlashMock flashMock;
+
+	EXPECT_CALL(flashMock, read)
+		.Times(5)
+		.WillRepeatedly(Return(100));
+
+	DeviceDriver deviceDriver(&flashMock);
+	EXPECT_THAT(100, deviceDriver.read(0x5));
+}
