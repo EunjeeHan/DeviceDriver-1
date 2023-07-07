@@ -1,5 +1,14 @@
 #pragma once
 #include "FlashMemoryDevice.h"
+#include <exception>
+
+using namespace std;
+
+class ReadFailException : public exception
+{};
+
+class WriteFailException : public exception
+{};
 
 class DeviceDriver
 {
@@ -10,4 +19,5 @@ public:
 
 protected:
     FlashMemoryDevice* m_hardware;
+    const int EMPTY_VALUE = 0xFF;
 };
