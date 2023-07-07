@@ -18,6 +18,5 @@ public:
     void write(long address, int data);
 
 protected:
-    FlashMemoryDevice* m_hardware;
-    const int EMPTY_VALUE = 0xFF;
+    FlashMemoryDevice* m_hardware;    
 };

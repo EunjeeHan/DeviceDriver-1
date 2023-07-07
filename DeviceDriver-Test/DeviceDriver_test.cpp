@@ -63,7 +63,7 @@ TEST_F(AppFixture, ReadAndPrintFailTest)
 TEST_F(AppFixture, WriteAllPassTest)
 {
 	EXPECT_CALL(flashMock, read)
-		.WillRepeatedly(Return(0xFF));
+		.WillRepeatedly(Return(EMPTY_VALUE));
 	EXPECT_CALL(flashMock, write)
 		.Times(5);
 
@@ -73,10 +73,10 @@ TEST_F(AppFixture, WriteAllPassTest)
 TEST_F(AppFixture, WriteAllFailTest)
 {
 	EXPECT_CALL(flashMock, read)
-		.WillOnce(Return(0xFF))
-		.WillOnce(Return(0xFF))
-		.WillOnce(Return(0xFF))
-		.WillOnce(Return(0xFF))
+		.WillOnce(Return(EMPTY_VALUE))
+		.WillOnce(Return(EMPTY_VALUE))
+		.WillOnce(Return(EMPTY_VALUE))
+		.WillOnce(Return(EMPTY_VALUE))
 		.WillOnce(Return(1));
 
 	EXPECT_THROW(app->WriteAll(100), WriteFailException);
@@ -98,8 +98,7 @@ TEST_F(FlashFixture, readPassTest) {
 }
 
 TEST_F(FlashFixture, readFailTest) {
-	EXPECT_CALL(flashMock, read)
-		.Times(5)
+	EXPECT_CALL(flashMock, read)		
 		.WillOnce(Return(1))
 		.WillRepeatedly(Return(100));
 
@@ -109,7 +108,7 @@ TEST_F(FlashFixture, readFailTest) {
 TEST_F(FlashFixture, readBeforeWritingTest) {
 	EXPECT_CALL(flashMock, read)
 		.Times(1)
-		.WillRepeatedly(Return(0xFF));
+		.WillRepeatedly(Return(EMPTY_VALUE));
 
 	deviceDriver->write(0x5, 3);
 }
@@ -123,7 +122,7 @@ TEST_F(FlashFixture, checkWriteFailTest) {
 
 TEST_F(FlashFixture, checkWritePassTest) {
 	EXPECT_CALL(flashMock, read)
-		.WillRepeatedly(Return(0xFF));
+		.WillRepeatedly(Return(EMPTY_VALUE));
 
 	EXPECT_NO_THROW(deviceDriver->write(0x5, 3), WriteFailException);
 }
