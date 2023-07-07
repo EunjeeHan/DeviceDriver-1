@@ -1,4 +1,5 @@
 #include "DeviceDriver.h"
+#define EMPTY_VALUE 0xFF
 
 DeviceDriver::DeviceDriver(FlashMemoryDevice* hardware) : m_hardware(hardware)
 {}
@@ -10,11 +11,10 @@ int DeviceDriver::read(long address)
     for (int i= 0; i < 4; i++)
     {
         readData[i] = (int)(m_hardware->read(address));
-    }
-    for (int i = 0; i < 4; i++)
-    {
-        if (readData[i] == result) continue;
-        throw ReadFailException();
+        if (readData[i] != result)
+        {
+            throw ReadFailException();
+        }        
     }
     return result;
 }
