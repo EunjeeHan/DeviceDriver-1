@@ -10,9 +10,13 @@ public:
 	MOCK_METHOD(void, write, (long address, unsigned char data), (override));
 };
 
-TEST(DeviceDriverReadTest, callFiveTimesTest) {
+class ReadFixture : public testing::Test
+{
+public:
 	FlashMock flashMock;
+};
 
+TEST_F(ReadFixture, callFiveTimesTest) {
 	EXPECT_CALL(flashMock, read)
 		.Times(5);
 
@@ -20,9 +24,7 @@ TEST(DeviceDriverReadTest, callFiveTimesTest) {
 	deviceDriver.read(0x5);
 }
 
-TEST(DeviceDriverReadTest, readPassTest) {
-	FlashMock flashMock;
-
+TEST_F(ReadFixture, readPassTest) {
 	EXPECT_CALL(flashMock, read)
 		.Times(5)
 		.WillRepeatedly(Return(100));
@@ -31,9 +33,7 @@ TEST(DeviceDriverReadTest, readPassTest) {
 	EXPECT_THAT(100, deviceDriver.read(0x5));
 }
 
-TEST(DeviceDriverReadTest, readFailTest) {
-	FlashMock flashMock;
-
+TEST_F(ReadFixture, readFailTest) {
 	EXPECT_CALL(flashMock, read)
 		.Times(5)
 		.WillOnce(Return(1))
