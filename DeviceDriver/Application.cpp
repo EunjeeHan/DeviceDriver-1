@@ -14,5 +14,8 @@ void Application::ReadAndPrint(long startAddr, long endAddr)
 
 void Application::WriteAll(int value)
 {
-
+	for (long addr = 0x00l; addr <= 0x04l; addr++)
+	{
+		driver->write(addr, value);
+	}
 }
